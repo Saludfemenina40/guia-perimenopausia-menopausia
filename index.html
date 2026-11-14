@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Salud 40+</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#7A5C7E; --teal-soft:#EFE6F0; --pink:#B5657A; --pink-soft:#F6E3E8;
+  --ink:#2E2430; --muted:#6E6370; --bg:#FAF7F9; --card:#ffffff; --line:#EBE3EA;
+  --ok:#2e9e6b; --ok-soft:#e5f5ec; --vig:#c98a00; --vig-soft:#fff4d9; --alto:#d33a3a; --alto-soft:#fde7e7;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:18px 16px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:22px;margin:0;font-weight:700}
+h1 span{color:var(--pink)}
+.sub{color:var(--muted);font-size:13px;margin:2px 0 12px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+nav button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+main{padding:18px 16px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 10px}
+.card h3{font-size:15px;margin:14px 0 8px}
+.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.cta{display:block;text-align:left;border:none;border-radius:16px;padding:20px;cursor:pointer;font:inherit;color:#fff;width:100%}
+.cta b{display:block;font-size:18px;margin-bottom:4px}
+.cta.t{background:var(--teal)} .cta.p{background:#E9C3CC;color:#5A2E3A}
+label{display:block;font-size:13px;font-weight:500;margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+textarea{min-height:60px}
+.field small{color:var(--muted);font-size:12px}
+.btn{border:none;background:var(--teal);color:#fff;font:inherit;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer}
+.btn.sec{background:var(--teal-soft);color:var(--teal)}
+.btn.pk{background:var(--pink)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.del{background:transparent;color:var(--alto);padding:4px 8px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sym{padding:10px 0;border-top:1px solid var(--line)}
+.sym:first-of-type{border-top:none}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+.scale button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 2px;font:inherit;font-size:12px;cursor:pointer;color:var(--muted)}
+.scale button.on{border-color:var(--teal);background:var(--teal-soft);color:var(--teal);font-weight:600}
+.scale button.on.l3{border-color:var(--pink);background:var(--pink-soft);color:var(--pink)}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
+.ok{background:var(--ok-soft);color:var(--ok)} .vig{background:var(--vig-soft);color:var(--vig)} .alto{background:var(--alto-soft);color:var(--alto)} .na{background:#F1EBF0;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500}
+.alert{border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:14px}
+.alert.alto{background:var(--alto-soft);color:#8a1f1f;font-weight:400}
+.alert.vig{background:var(--vig-soft);color:#6e4c00;font-weight:400}
+.alert.info{background:var(--teal-soft);color:#55385A}
+.rec{border-left:4px solid var(--teal);padding:8px 12px;margin-bottom:10px;background:#FBF8FB;border-radius:0 10px 10px 0}
+.rec b{display:block}
+.rec .why{font-size:12px;color:var(--muted)}
+.bar{height:10px;border-radius:99px;background:#F1EBF0;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.barrow{display:grid;grid-template-columns:160px 1fr 44px;gap:10px;align-items:center;font-size:13px;margin:6px 0}
+.big{font-size:34px;font-weight:700;line-height:1}
+.dots{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;color:var(--muted)}
+.dot.done{background:var(--pink);border-color:var(--pink);color:#fff}
+.dot.fut{opacity:.35;cursor:default}
+.wk{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:8px}
+.wk div{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.wk i{display:block;background:var(--teal);border-radius:6px 6px 0 0;margin:0 auto 4px;width:70%}
+svg text{font-family:inherit}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+.reto{border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px;background:#fff}
+.rt{font-size:16px}
+.stats{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:10px 0 4px}
+.stats small{display:block;font-size:12px;color:var(--muted)}
+.big2{font-size:26px;font-weight:700;color:var(--teal);line-height:1.1}
+.hitos{display:flex;gap:8px;margin-left:auto}
+.hito{display:flex;flex-direction:column;align-items:center;font-size:22px;opacity:.25;filter:grayscale(1)}
+.hito.on{opacity:1;filter:none}
+.hito small{font-size:10px;color:var(--muted)}
+.msg{margin:4px 0 12px;font-size:14px}
+.big-check{width:100%;padding:15px;font-size:16px}
+.big-check.done,.btn.hecho{background:var(--pink)}
+.big-check small{font-weight:400;font-size:12px;opacity:.9}
+.tip{background:var(--pink-soft);border-radius:10px;padding:10px 12px;font-size:14px;margin:12px 0 4px}
+details{margin-top:10px} summary{cursor:pointer}
+.dot.today{border:2px solid var(--teal)}
+.pill.tag{background:var(--pink-soft);color:#8A3A52}
+.mini{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.logro{background:var(--pink-soft);border-radius:12px;padding:10px 14px;font-size:13px;text-align:center;min-width:130px}
+.logro b{display:block;font-size:13px} .logro small{color:var(--muted)}
+.ov{position:fixed;inset:0;background:rgba(46,36,48,.45);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.ov>div{background:#fff;border-radius:18px;padding:28px 24px;max-width:360px;text-align:center}
+.ov .e{font-size:56px;line-height:1.2}
+h3{font-size:15px}
+.obj{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--pink);border-color:var(--pink);color:#fff}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dh{text-align:center;font-size:12px;color:var(--muted);padding:2px 0}
+.cd{border:1px solid var(--line);background:#fff;border-radius:10px;min-height:54px;padding:5px 2px;font:inherit;font-size:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink)}
+.cd.hoy{border:2px solid var(--teal);font-weight:700}.cd.sel{background:var(--teal-soft)}.cd.fut{opacity:.5}
+.cdots{display:flex;flex-wrap:wrap;gap:2px;justify-content:center}.cdots i{width:7px;height:7px;border-radius:50%;display:block}
+.ley{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin-top:12px}.ley i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.ev{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}.evd{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+.tcomp th,.tcomp td{white-space:nowrap}.tcomp a{color:var(--teal)}
+.vv{padding:2px 8px;border-radius:99px;font-weight:600;font-size:13px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:0 16px 30px}
+@media (max-width:520px){.barrow{grid-template-columns:110px 1fr 40px}.cta b{font-size:16px}}
+@media print{header nav,.noprint,.btn{display:none!important}header{position:static}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Mi Salud <span>40+</span></h1>
+    <p class="sub">Guía interactiva de síntomas de la perimenopausia y menopausia · Jordina Casademunt</p>
+    <nav id="nav"></nav>
+  </div>
+</header>
+<main><div class="wrap" id="app"></div></main>
+<footer>Herramienta educativa y de autoseguimiento. No sustituye la valoración de tu médica, ginecóloga o nutricionista. Los rangos son orientativos. Tus datos se guardan solo en este navegador.</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== DATOS Y CONFIGURACIÓN ===================== */
+const KEY='salud40_v1';
+const TABS=[['inicio','Inicio'],['sintomas','Síntomas'],['analiticas','Analíticas'],['medidas','Peso y medidas'],['digestivo','Digestivo'],['ejercicio','Ejercicio'],['retos','Retos y objetivos'],['calendario','Calendario'],['datos','Mi perfil y datos']];
+
+const CATS=[
+ {id:'vaso',nom:'Sofocos y vasomotores',items:[['sofocos','Tengo sofocos'],['sudores','Tengo sudores nocturnos'],['palpit','Noto palpitaciones']]},
+ {id:'sueno',nom:'Sueño',items:[['dormir','Me cuesta dormirme'],['despertar','Me despierto de madrugada y me cuesta volver a dormir'],['descanso','Me levanto sin sensación de descanso']]},
+ {id:'animo',nom:'Salud emocional',items:[['ansiedad','Me noto inquieta o nerviosa'],['tristeza','Tengo sentimientos de tristeza'],['irrit','Tengo irritabilidad o cambios de humor repentinos'],['apatia','Todo me aburre, incluso lo que antes me divertía']]},
+ {id:'cog',nom:'Concentración y memoria',items:[['niebla','Me cuesta concentrarme (niebla mental)'],['palabras','Me cuesta recordar cosas o encontrar las palabras'],['memoria','Tengo pérdidas de memoria']]},
+ {id:'energia',nom:'Energía y metabolismo',items:[['cansancio','Estoy cansada durante el día'],['bajon','Tengo un bajón de energía a media tarde'],['antojos','Tengo antojos de dulce o picoteo'],['abdomen','Noto que acumulo grasa en el abdomen']]},
+ {id:'musc',nom:'Articulaciones, músculo y cabeza',items:[['articular','Tengo dolor articular'],['rigidez','Tengo rigidez o dolor muscular'],['cefalea','Tengo dolores de cabeza o migrañas']]},
+ {id:'dig',nom:'Digestivo',items:[['hinchazon','Tengo hinchazón abdominal'],['estren','Tengo estreñimiento'],['digest','Tengo digestiones pesadas o me sientan mal alimentos que antes no']]},
+ {id:'libido',nom:'Libido y sexualidad',items:[['deseo','Mi deseo sexual ha disminuido'],['disfrute','Ha disminuido mi disfrute del sexo respecto a antes'],['pareja','Mi relación de pareja se ha deteriorado'],['expresar','Me cuesta expresar mis sentimientos']]},
+ {id:'genito',nom:'Genitourinario',items:[['sequedad','Tengo sequedad vaginal'],['dolorrel','Siento dolor o molestias en las relaciones'],['urinario','Tengo urgencia o necesidad de orinar con más frecuencia']]},
+ {id:'piel',nom:'Piel y cabello',items:[['piel','Tengo la piel más seca o con picor'],['pelo','Se me cae o debilita el cabello']]}
+];
+const NIV=['Nada','Poco','Bastante','Mucho'];
+
+const MARC={
+ glucosa:{n:'Glucosa en ayunas',u:'mg/dL',r:'< 100',f:v=>v<100?'ok':v<126?'vig':'alto'},
+ insulina:{n:'Insulina en ayunas',u:'µU/mL',r:'< 8 (funcional)',f:v=>v<8?'ok':v<=12?'vig':'alto'},
+ homa:{n:'Índice HOMA-IR',u:'',r:'< 2',f:v=>v<2?'ok':v<=2.5?'vig':'alto',calc:true},
+ hba1c:{n:'Hemoglobina glicosilada (HbA1c)',u:'%',r:'< 5,7',f:v=>v<5.7?'ok':v<6.5?'vig':'alto'},
+ ct:{n:'Colesterol total',u:'mg/dL',r:'< 200',f:v=>v<200?'ok':v<240?'vig':'alto'},
+ hdl:{n:'Colesterol HDL',u:'mg/dL',r:'≥ 50',f:v=>v>=50?'ok':v>=40?'vig':'alto'},
+ ldl:{n:'Colesterol LDL',u:'mg/dL',r:'< 116',f:v=>v<116?'ok':v<160?'vig':'alto'},
+ nohdl:{n:'Colesterol no-HDL',u:'mg/dL',r:'< 145',f:v=>v<145?'ok':v<190?'vig':'alto',calc:true},
+ tg:{n:'Triglicéridos',u:'mg/dL',r:'< 100 óptimo · < 150',f:v=>v<100?'ok':v<150?'vig':'alto'},
+ tghdl:{n:'Ratio triglicéridos/HDL',u:'',r:'< 2',f:v=>v<2?'ok':v<=3?'vig':'alto',calc:true},
+ vitd:{n:'Vitamina D (25-OH)',u:'ng/mL',r:'30–100 (ideal 40–60)',f:v=>v<20?'alto':v<30?'vig':v<=100?'ok':'alto'},
+ ferritina:{n:'Ferritina',u:'ng/mL',r:'30–150',f:v=>v<15?'alto':v<30?'vig':v<=150?'ok':v<=300?'vig':'alto'},
+ tsh:{n:'TSH',u:'mUI/L',r:'0,4–4',f:v=>(v>=0.4&&v<=4)?'ok':(v<0.1||v>10)?'alto':'vig'},
+ pcr:{n:'PCR ultrasensible',u:'mg/L',r:'< 1',f:v=>v<1?'ok':v<=3?'vig':'alto'}
+};
+const MARC_MED={
+ imc:{n:'IMC',u:'kg/m²',r:'18,5–24,9 (orientativo)',f:v=>v<18.5?'vig':v<25?'ok':v<30?'vig':'alto'},
+ cintura:{n:'Perímetro de cintura',u:'cm',r:'< 80',f:v=>v<80?'ok':v<88?'vig':'alto'},
+ ica:{n:'Índice cintura/altura',u:'',r:'< 0,5',f:v=>v<0.5?'ok':v<0.6?'vig':'alto'},
+ icc:{n:'Índice cintura/cadera',u:'',r:'< 0,85',f:v=>v<0.8?'ok':v<0.86?'vig':'alto'},
+ ta:{n:'Tensión arterial',u:'mmHg',r:'< 120/80'}
+};
+const ANAL_CAMPOS=['glucosa','insulina','hba1c','ct','hdl','ldl','tg','vitd','ferritina','tsh','pcr'];
+
+const BRISTOL=['','1 · Bolitas duras separadas','2 · Forma de salchicha, grumosa','3 · Salchicha con grietas','4 · Lisa y blanda (ideal)','5 · Trozos blandos','6 · Pastosa, bordes irregulares','7 · Líquida'];
+const TIPOS_EJ=['Fuerza','Caminar','Cardio (bici, correr, nadar…)','Movilidad / yoga / pilates','Otro'];
+
+const RETOS=[
+ {id:'prot',ic:'🍳',t:'Desayuno con proteína',tipo:'diario',para:['energia','cog','musc','cardio'],d:'Un desayuno con proteína estabiliza la glucosa toda la mañana: menos bajones, menos antojos y más saciedad.',tips:['Tortilla de 2 huevos con espinacas y unas láminas de aguacate.','Yogur griego natural con frutos rojos, nueces y canela.','Revuelto de tofu con champiñones y cúrcuma.','Kéfir con semillas de chía remojadas y un puñado de arándanos.','Hummus con crudités y un huevo duro.','Sobras de la cena: un poco de pescado o legumbre también es un desayuno.','Queso fresco batido con fruta y semillas de calabaza.']},
+ {id:'paseo',ic:'🚶‍♀️',t:'Paseo de 10 minutos tras la comida',tipo:'diario',para:['cardio','energia'],d:'Al caminar después de comer, el músculo capta la glucosa sin necesitar tanta insulina. Diez minutos bastan.',tips:['No hace falta ir rápido: basta con caminar a ritmo de conversación.','Si no puedes salir, sube y baja escaleras o camina por casa mientras hablas por teléfono.','Ponte una alarma 10 minutos después de terminar de comer.','Invita a alguien: es más fácil cumplir acompañada.','Los días de comida más copiosa es cuando más ayuda.']},
+ {id:'fuerza',ic:'💪',t:'Fuerza 2 veces por semana',tipo:'semanal',para:['musc','cardio','animo'],d:'A partir de los 40 se pierde músculo más rápido. Mantenerlo protege el metabolismo, los huesos, las articulaciones y el ánimo.',tips:['Sentadillas a una silla: 3 series de 10, bajando despacio.','Flexiones apoyando las manos en la pared o en la encimera: 3 × 10.','Puente de glúteo en el suelo: 3 × 12, aguantando 2 segundos arriba.','Remo con goma elástica o con una mochila cargada: 3 × 12.','Zancadas hacia atrás sujetándote a una silla: 3 × 8 por pierna.','Subir y bajar un escalón con control: 3 × 10 por pierna.','Peso muerto con dos garrafas de agua, espalda recta: 3 × 10.']},
+ {id:'cena',ic:'🌙',t:'Cenar pronto y ligero',tipo:'diario',para:['sueno','vaso','dig'],d:'Cenar 2–3 horas antes de acostarte mejora el sueño y suele reducir los sofocos y sudores nocturnos.',tips:['Adelanta la cena 30 minutos respecto a lo habitual: poco a poco.','Cena tipo: crema de verduras con pescado blanco o tortilla.','Evita alcohol y picante por la noche si tienes sofocos nocturnos.','Si llegas con mucha hambre a la cena, revisa la merienda: añade proteína.','Cierra la cocina después de cenar: ayuda a no picar.']},
+ {id:'pantallas',ic:'📵',t:'Última hora sin pantallas',tipo:'diario',para:['sueno','animo'],d:'La luz de las pantallas retrasa la melatonina. Una rutina tranquila y repetida cada noche ayuda a dormir mejor.',tips:['Pon el móvil a cargar fuera del dormitorio.','Baja las luces de casa una hora antes de acostarte.','Cambia la pantalla por lectura en papel, música o estiramientos suaves.','Activa el modo «no molestar» a la misma hora cada noche.','Una ducha templada antes de dormir ayuda a bajar la temperatura corporal.']},
+ {id:'verdura',ic:'🥦',t:'Verdura en comida y cena',tipo:'diario',para:['dig','cardio'],d:'Medio plato de verdura en las dos comidas principales: fibra para tu microbiota y una glucosa más estable.',tips:['Empieza la comida por la verdura: frena la subida de glucosa.','Ten verdura ya lavada y cortada en la nevera para los días de prisa.','Las verduras congeladas cuentan igual.','Una ensalada de hojas verdes como primer plato es la forma más fácil de sumar.','Varía colores: verde, naranja, morado… cada color alimenta a bacterias distintas.']},
+ {id:'luz',ic:'☀️',t:'Luz natural por la mañana',tipo:'diario',para:['sueno','animo'],d:'10–15 minutos de luz exterior antes de las 10 h sincronizan tu reloj interno: mejor ánimo de día y mejor sueño de noche.',tips:['Desayuna junto a una ventana abierta o en el balcón.','Bájate una parada antes y camina con luz natural.','Aunque esté nublado, la luz exterior es mucho más intensa que la de casa.','Sin gafas de sol durante esos 10 minutos (y sin mirar directamente al sol).','Combínalo con un paseo y sumas dos hábitos a la vez.']},
+ {id:'agua',ic:'💧',t:'Hidratación consciente',tipo:'diario',para:['dig','piel','energia'],d:'Beber de forma repartida ayuda al tránsito, a la piel y a la energía. Orientativo: 1,5–2 L al día, más si hace calor o haces ejercicio.',tips:['Empieza el día con un vaso de agua antes del café.','Ten una botella a la vista en tu mesa.','Las infusiones sin azúcar también cuentan.','Si te cuesta, añade rodajas de limón, pepino o menta.','Bebe un vaso con cada comida.']},
+ {id:'respira',ic:'🌬️',t:'5 minutos de respiración lenta',tipo:'diario',para:['animo','vaso','sueno'],d:'Respirar despacio calma el sistema nervioso, ayuda con la ansiedad y puede suavizar la intensidad de los sofocos.',tips:['Inspira contando 4 y espira contando 6. Repite durante 5 minutos.','Hazlo al despertar o antes de dormir, siempre a la misma hora.','Si notas que empieza un sofoco, prueba la respiración lenta en ese momento.','Pon una mano en el abdomen: que se mueva más que el pecho.','Un temporizador te ayuda a no tener que contar el tiempo.']},
+ {id:'azucar',ic:'🍓',t:'Día sin azúcar añadido',tipo:'diario',para:['cardio','energia','vaso'],d:'Reducir el azúcar añadido mejora la sensibilidad a la insulina, la energía y los antojos. El paladar se adapta en pocas semanas.',tips:['Revisa etiquetas: el azúcar se esconde en salsas, yogures de sabores y pan de molde.','Cambia el postre dulce por fruta entera o un trozo de chocolate negro (85 % o más).','Si te apetece dulce a media tarde, suele faltar proteína en la comida.','Café e infusiones sin azúcar: el paladar se acostumbra antes de lo que crees.','Los zumos cuentan como azúcar: mejor la fruta entera.']}
+];
+const DIAS_RETO=14, META_DIARIO=10, SEM_DIAS=28, META_SEM=8;
+const HITOS_D=[[3,'🌱','Semilla'],[7,'🌿','Brote'],[10,'🌸','Reto superado'],[14,'🏅','¡Pleno!']];
+const HITOS_S=[[2,'🌱','Primera semana'],[4,'🌿','Mitad del reto'],[8,'🌸','Reto superado']];
+const ANIMOS=['¡Hecho! Cada día suma.','Tu cuerpo lo nota aunque aún no lo veas.','Constancia mejor que perfección. ¡Bien!','Un día más. Así se construye un hábito.','¡Otro check! Sigue así.'];
+
+/* ===================== UTILIDADES ===================== */
+let D;
+const vacio=()=>({perfil:{},sintomas:[],analiticas:[],medidas:[],digestivo:[],ejercicio:[],retos:{},objetivos:[],logros:[]});
+function cargar(){try{D=Object.assign(vacio(),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){D=vacio()}D.objetivos=(D.objetivos||[]).map(o=>Object.assign({tipo:'meta',dias:[]},o))}
+function guardar(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast('No se ha podido guardar. Exporta tus datos para no perderlos.')}}
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const hoy=()=>ymd(new Date());
+const fmt=s=>{if(!s)return'';const[a,m,d]=s.split('-');return d+'/'+m+'/'+a.slice(2)};
+const num=v=>{if(v===''||v==null)return null;const n=parseFloat(String(v).replace(',','.'));return isNaN(n)?null:n};
+const r1=v=>Math.round(v*10)/10, r2=v=>Math.round(v*100)/100;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const byFecha=a=>[...a].sort((x,y)=>x.fecha<y.fecha?1:-1);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const dt=s=>{const[a,m,d]=s.split('-').map(Number);return new Date(a,m-1,d)};
+const sumaDias=(s,n)=>{const d=dt(s);d.setDate(d.getDate()+n);return ymd(d)};
+const diasEntre=(a,b)=>Math.round((dt(b)-dt(a))/864e5);
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2600)}
+const pill=e=>`<span class="pill ${e}">${{ok:'Óptimo',vig:'Vigilar',alto:'Fuera de rango',na:'Sin dato'}[e]}</span>`;
+const colorE=e=>({ok:'var(--ok)',vig:'var(--vig)',alto:'var(--alto)'}[e]||'var(--teal)');
+const fmtN=v=>String(v).replace('.',',');
+
+function chart(pts,color='#7A5C7E',unidad='',cf=null){
+  pts=pts.filter(p=>p.y!=null).sort((a,b)=>a.x<b.x?-1:1);
+  if(pts.length<2)return '<p class="muted">Con 2 registros o más verás aquí la evolución.</p>';
+  const W=400,H=190,P=30;const ys=pts.map(p=>p.y);let mn=Math.min(...ys),mx=Math.max(...ys);
+  if(mn===mx){mn-=1;mx+=1}const pd=(mx-mn)*.2;mn-=pd;mx+=pd;
+  const X=i=>P+i*(W-2*P)/(pts.length-1),Y=v=>H-P-(v-mn)/(mx-mn)*(H-2*P);
+  const d=pts.map((q,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(q.y).toFixed(1)).join(' ');
+  const pc=pts.map((q,i)=>`<circle cx="${X(i)}" cy="${Y(q.y)}" r="5" fill="${cf?cf(q.y):color}"/><text x="${X(i)}" y="${Y(q.y)-9}" font-size="14" font-weight="600" text-anchor="middle" fill="#2E2430">${fmtN(r1(q.y))}</text>`).join('');
+  const step=Math.ceil(pts.length/4);
+  const lx=pts.map((q,i)=>i%step===0||i===pts.length-1?`<text x="${X(i)}" y="${H-10}" font-size="12" text-anchor="middle" fill="#6E6370">${fmt(q.x)}</text>`:'').join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Evolución ${esc(unidad)}"><line x1="${P}" x2="${W-P}" y1="${H-P}" y2="${H-P}" stroke="#EBE3EA"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round"/>${pc}${lx}</svg>`;
+}
+
+/* ===================== CÁLCULOS ===================== */
+function calcAnal(a){
+  const o={...a};
+  if(a.glucosa!=null&&a.insulina!=null)o.homa=r2(a.glucosa*a.insulina/405);
+  if(a.tg!=null&&a.hdl)o.tghdl=r2(a.tg/a.hdl);
+  if(a.ct!=null&&a.hdl!=null)o.nohdl=Math.round(a.ct-a.hdl);
+  return o;
+}
+function calcMed(m){
+  const o={...m};const alt=num(D.perfil.altura);
+  if(m.peso!=null&&alt)o.imc=r1(m.peso/((alt/100)**2));
+  if(m.cintura!=null&&alt)o.ica=r2(m.cintura/alt);
+  if(m.cintura!=null&&m.cadera)o.icc=r2(m.cintura/m.cadera);
+  return o;
+}
+function ultimo(arr,k,calc){for(const e of byFecha(arr)){const c=calc?calc(e):e;if(c[k]!=null)return{v:c[k],fecha:e.fecha}}return null}
+function evalTA(s,d){if(s>=140||d>=90)return'alto';if(s<120&&d<80)return'ok';return'vig'}
+
+function valoracionCardio(){
+  const items=[];
+  for(const k in MARC){const u=ultimo(D.analiticas,k,calcAnal);if(u)items.push({k,n:MARC[k].n,v:u.v,u:MARC[k].u,r:MARC[k].r,e:MARC[k].f(u.v),fecha:u.fecha})}
+  for(const k of ['imc','cintura','ica','icc']){const u=ultimo(D.medidas,k,calcMed);if(u)items.push({k,n:MARC_MED[k].n,v:u.v,u:MARC_MED[k].u,r:MARC_MED[k].r,e:MARC_MED[k].f(u.v),fecha:u.fecha})}
+  const ta=byFecha(D.medidas).find(m=>m.tas!=null&&m.tad!=null);
+  if(ta)items.push({k:'ta',n:'Tensión arterial',v:ta.tas+'/'+ta.tad,u:'mmHg',r:'< 120/80',e:evalTA(ta.tas,ta.tad),fecha:ta.fecha,tas:ta.tas,tad:ta.tad});
+  const get=k=>items.find(i=>i.k===k);
+  // Síndrome metabólico (criterios ATP III, mujer)
+  const crit=[];let evaluados=0;
+  const c=get('cintura');if(c){evaluados++;if(c.v>=88)crit.push('cintura ≥ 88 cm')}
+  const tg=get('tg');if(tg){evaluados++;if(tg.v>=150)crit.push('triglicéridos ≥ 150')}
+  const h=get('hdl');if(h){evaluados++;if(h.v<50)crit.push('HDL < 50')}
+  const t=get('ta');if(t){evaluados++;if(t.tas>=130||t.tad>=85)crit.push('tensión ≥ 130/85')}
+  const g=get('glucosa');if(g){evaluados++;if(g.v>=100)crit.push('glucosa ≥ 100')}
+  const pts=items.reduce((s,i)=>s+(i.e==='ok'?1:i.e==='vig'?.5:0),0);
+  const score=items.length?Math.round(pts/items.length*100):null;
+  return{items,get,score,sm:{crit,evaluados}};
+}
+
+function scoreSint(e){
+  const out={};let tot=0,n=0;
+  for(const c of CATS){let s=0,k=0;for(const[id]of c.items){if(e.v[id]!=null){s+=e.v[id];k++}}if(k){out[c.id]=Math.round(s/(3*k)*100);tot+=s;n+=k}}
+  out.total=n?Math.round(tot/(3*n)*100):null;return out;
+}
+
+function fase(){
+  const p=D.perfil;if(!p.ultimaRegla)return null;
+  const meses=diasEntre(p.ultimaRegla,hoy())/30.4;
+  if(meses>=12)return{t:'Posmenopausia',d:'Han pasado 12 meses o más desde tu última regla.'};
+  if(p.irregular||meses>=2)return{t:'Perimenopausia (probable)',d:'Ciclos irregulares o más de 60 días sin regla. Se confirma la menopausia tras 12 meses sin regla.'};
+  return{t:'Ciclos presentes',d:'Si tienes síntomas y más de 40 años, puede ser una perimenopausia temprana.'};
+}
+
+function semanaActual(){
+  const d=new Date();const dia=(d.getDay()+6)%7;d.setDate(d.getDate()-dia);return ymd(d);
+}
+function resumenSemana(inicio){
+  const fin=dt(inicio);fin.setDate(fin.getDate()+7);const f=ymd(fin);
+  const reg=D.ejercicio.filter(e=>e.fecha>=inicio&&e.fecha<f);
+  const min=reg.filter(e=>e.int!=='suave').reduce((s,e)=>s+(+e.min||0),0);
+  const fuerza=new Set(reg.filter(e=>e.tipo==='Fuerza').map(e=>e.fecha)).size;
+  const total=reg.reduce((s,e)=>s+(+e.min||0),0);
+  return{min,fuerza,total};
+}
+
+/* ===================== AVISOS Y RECOMENDACIONES ===================== */
+function avisos(){
+  const A=[];const V=valoracionCardio();const ls=byFecha(D.sintomas)[0];
+  if(ls){
+    if(ls.sangrado==='post')A.push(['alto','Has registrado un sangrado tras 12 meses sin regla. Pide cita con tu ginecóloga lo antes posible: siempre hay que valorarlo.']);
+    if(ls.sangrado==='abund')A.push(['vig','Sangrados muy abundantes o entre reglas: coméntalo con tu ginecóloga y revisa tu ferritina.']);
+    if(ls.v.tristeza===3||ls.v.apatia===3)A.push(['vig','Has marcado tristeza o falta de ilusión intensas. Si dura más de dos semanas, pide ayuda a tu médica o a un profesional de salud mental. No tienes que pasarlo sola.']);
+    if(ls.v.palpit===3)A.push(['vig','Palpitaciones intensas: coméntalo con tu médica, sobre todo si van con mareo, falta de aire o dolor en el pecho (en ese caso, urgencias).']);
+  }
+  const t=V.get('ta');
+  if(t){if(t.tas>=180||t.tad>=120)A.push(['alto','Tensión muy alta ('+t.v+'). Repite la medida en reposo; si se mantiene o tienes dolor de cabeza intenso, dolor en el pecho o alteraciones de la visión, acude a urgencias.']);
+    else if(t.e==='alto')A.push(['alto','Tensión arterial ≥ 140/90. Consulta con tu médica para confirmarlo con varias medidas.'])}
+  const g=V.get('glucosa'),h=V.get('hba1c');
+  if((g&&g.v>=126)||(h&&h.v>=6.5))A.push(['alto','Glucosa o HbA1c en rango compatible con diabetes. Necesita confirmarse con tu médica.']);
+  else if((g&&g.v>=100)||(h&&h.v>=5.7))A.push(['vig','Glucosa o HbA1c en rango de prediabetes: es el mejor momento para actuar, es reversible.']);
+  if(V.sm.crit.length>=3)A.push(['alto','Cumples '+V.sm.crit.length+' de 5 criterios de síndrome metabólico ('+V.sm.crit.join(', ')+'). Conviene un plan de acompañamiento y revisión médica.']);
+  const vd=V.get('vitd');if(vd&&vd.v<20)A.push(['vig','Vitamina D en déficit ('+fmtN(vd.v)+' ng/mL). La suplementación debe pautarla un profesional.']);
+  if(vd&&vd.v>100)A.push(['vig','Vitamina D por encima de 100 ng/mL: revisa la dosis de suplemento con tu profesional.']);
+  const fe=V.get('ferritina');if(fe&&fe.v<15)A.push(['vig','Ferritina muy baja ('+fmtN(fe.v)+'): puede explicar cansancio y caída de cabello. Coméntalo con tu médica.']);
+  const ts=V.get('tsh');if(ts&&ts.e!=='ok')A.push(['vig','TSH fuera de rango: la tiroides puede dar síntomas parecidos a la perimenopausia. Revísalo con tu médica.']);
+  const lim=new Date();lim.setDate(lim.getDate()-21);const l=ymd(lim);
+  const dig=D.digestivo.filter(d=>d.fecha>=l);
+  if(dig.some(d=>d.sangre))A.push(['alto','Has registrado sangre en las heces. Consulta con tu médica.']);
+  if(dig.filter(d=>d.hinchazon>=2).length>=10)A.push(['vig','Hinchazón casi diaria durante 3 semanas o más. Si es nueva para ti (sobre todo a partir de los 50), consulta con tu médica para descartar otras causas.']);
+  return A;
+}
+
+function recomendaciones(){
+  const R=[];const add=(t,d,why)=>R.push({t,d,why});
+  const V=valoracionCardio();const ls=byFecha(D.sintomas)[0];const S=ls?scoreSint(ls):{};
+  const alto=id=>S[id]!=null&&S[id]>=50;
+  const ins=V.get('homa')||V.get('insulina');
+  if(ins&&ins.e!=='ok')add('Prioriza la estabilidad de tu glucosa','Empieza las comidas por la verdura, después la proteína y al final los hidratos. Reduce azúcares y harinas refinadas y camina 10 minutos después de comer.','Tu '+ins.n.toLowerCase()+' está en '+fmtN(ins.v)+'.');
+  const tgh=V.get('tghdl');if(tgh&&tgh.e!=='ok')add('Baja tu ratio triglicéridos/HDL','Reduce alcohol, zumos, bollería y azúcares añadidos. Suma pescado azul 2–3 veces por semana y fuerza.','Ratio TG/HDL de '+fmtN(tgh.v)+' (un valor alto se asocia a resistencia a la insulina).');
+  const ldl=V.get('ldl')||V.get('nohdl');if(ldl&&ldl.e!=='ok')add('Más fibra soluble y grasas de calidad','Avena, legumbres, semillas de lino, fruta entera, aceite de oliva virgen extra y frutos secos a diario.',ldl.n+': '+fmtN(ldl.v)+' mg/dL.');
+  const c=V.get('cintura')||V.get('ica');if(c&&c.e!=='ok')add('Trabaja la grasa abdominal desde el músculo','Fuerza 2–3 veces por semana, proteína en cada comida y sueño suficiente. La báscula no lo cuenta todo: sigue tu cintura.',c.n+': '+fmtN(c.v)+(c.u?' '+c.u:'')+'.');
+  const vd=V.get('vitd');if(vd&&vd.v<30)add('Cuida tu vitamina D','Exposición solar prudente, pescado azul y huevos. Valora con tu profesional la suplementación.','Vitamina D de '+fmtN(vd.v)+' ng/mL.');
+  if(alto('vaso'))add('Identifica tus desencadenantes de sofocos','Anota si aparecen tras alcohol, café, picante, cenas copiosas o estrés. Cena pronto y ligera y ten a mano capas de ropa.','Tus síntomas vasomotores están en un '+S.vaso+'%. La insulina elevada se ha asociado a más sofocos.');
+  if(alto('sueno'))add('Ritual de sueño','Horario regular, cafeína solo antes de las 14 h, cena 2–3 h antes de dormir, habitación fresca y oscura, luz natural por la mañana.','Tus alteraciones del sueño están en un '+S.sueno+'%.');
+  if(alto('animo'))add('Cuida tu sistema nervioso','Movimiento diario, contacto con la naturaleza, pausas de respiración lenta y espacios para ti. El ejercicio de fuerza también mejora el ánimo.','Tu salud emocional marca un '+S.animo+'%.');
+  if(alto('cog'))add('Combustible estable para tu cerebro','Comidas con proteína y fibra, sin largos periodos de picoteo dulce. Dormir bien es la base de la memoria.','Concentración y memoria en un '+S.cog+'%.');
+  if(alto('energia'))add('Recupera energía','Proteína en el desayuno, no saltarte comidas y revisar ferritina, vitamina D y TSH en tu próxima analítica.','Energía y metabolismo en un '+S.energia+'%.');
+  if(alto('musc'))add('Muévete para tus articulaciones','Fuerza con cargas progresivas, movilidad diaria y pescado azul. Revisa tu vitamina D.','Articulaciones y músculo en un '+S.musc+'%.');
+  if(alto('dig'))add('Calma tu digestión','Come sin prisa y mastica bien, aumenta la fibra de forma progresiva, hidrátate y registra qué alimentos te sientan mal.','Síntomas digestivos en un '+S.dig+'%.');
+  if(alto('genito')||alto('libido'))add('Tu salud íntima también cuenta','Coméntalo con tu ginecóloga: existen tratamientos locales eficaces. Una fisioterapeuta de suelo pélvico también puede ayudarte.','Libido y genitourinario: '+(S.libido??'–')+'% / '+(S.genito??'–')+'%.');
+  const sem=resumenSemana(semanaActual());
+  if(sem.fuerza<2)add('Fuerza esta semana','Llevas '+sem.fuerza+' de 2 sesiones de fuerza. Con 20–30 minutos basta para empezar.','A partir de los 40 se pierde músculo más rápido.');
+  const dig=byFecha(D.digestivo).slice(0,7);
+  if(dig.length>=3&&dig.filter(d=>d.bristol&&d.bristol<=2).length>=dig.length/2)add('Ayuda a tu tránsito','Más verdura, legumbre, kiwi o ciruelas, semillas de lino o chía remojadas, agua y movimiento diario. Respeta el momento de ir al baño.','La mayoría de tus registros son Bristol 1–2.');
+  if(!R.length)add('Empieza por lo básico','Proteína en el desayuno, 10 minutos de paseo tras la comida principal, fuerza dos veces por semana y una rutina de noche sin pantallas. Elige una o dos y mantenlas 15 días.','Con tus registros, las recomendaciones se irán personalizando.');
+  return R;
+}
+
+/* ===================== VISTAS ===================== */
+let TAB='inicio';
+function nav(){document.getElementById('nav').innerHTML=TABS.map(([id,n])=>`<button class="${id===TAB?'on':''}" onclick="ir('${id}')">${n}</button>`).join('')}
+function ir(t){TAB=t;nav();render();window.scrollTo({top:0,behavior:'smooth'})}
+function render(){document.getElementById('app').innerHTML=VISTAS[TAB]();if(AFTER[TAB])AFTER[TAB]()}
+const AFTER={};
+
+const VISTAS={
+inicio(){
+  const V=valoracionCardio();const ls=byFecha(D.sintomas)[0];const S=ls?scoreSint(ls):null;const A=avisos();const R=recomendaciones();const fa=fase();
+  const nombre=D.perfil.nombre?', '+esc(D.perfil.nombre):'';
+  const activos=RETOS.filter(r=>D.retos[r.id]);
+  return `
+  <div class="grid g2" style="margin-bottom:16px">
+    <button class="cta t" onclick="ir('analiticas')"><b>Calcula tu salud cardiometabólica</b>Introduce tu analítica y tus medidas: HOMA, ratio TG/HDL, cintura, tensión…</button>
+    <button class="cta p" onclick="ir('sintomas')"><b>Sigue tus síntomas</b>Sofocos, sueño, ánimo, digestión, libido… y mira cómo evolucionan.</button>
+  </div>
+  ${(()=>{const n=D.sintomas.length+D.analiticas.length+D.medidas.length+D.digestivo.length+D.ejercicio.length;const dias=D.ultimaCopia?diasEntre(D.ultimaCopia,hoy()):null;return n>=5&&(dias==null||dias>=30)?`<div class="alert info noprint">💾 ${dias==null?'Aún no has guardado ninguna copia de tus datos':'Hace '+dias+' días de tu última copia'}. Tus registros solo están en este dispositivo: guarda una copia para no perderlos. <button class="btn sm" style="margin-left:6px" onclick="exportar()">Guardar copia ahora</button></div>`:''})()}
+  <div class="card"><h2>Hola${nombre} 👋</h2>
+    ${fa?`<p><span class="pill na">${fa.t}</span> <span class="muted">${fa.d}</span></p>`:`<p class="muted">Completa <a href="#" onclick="ir('datos');return false">tu perfil</a> (altura y fecha de tu última regla) para afinar los cálculos.</p>`}
+    <p class="muted" style="margin:8px 0 0">🔒 Tus datos son privados: se guardan solo en este dispositivo y nadie más puede verlos.</p>
+  </div>
+  ${A.length?`<div class="card"><h2>Avisos</h2>${A.map(([n,t])=>`<div class="alert ${n}">${t}</div>`).join('')}</div>`:''}
+  <div class="grid g2">
+    <div class="card"><h2>Valoración cardiometabólica</h2>
+      ${V.score!=null?`<div class="row"><div class="big" style="color:${V.score>=75?'var(--ok)':V.score>=50?'var(--vig)':'var(--alto)'}">${V.score}<span style="font-size:16px">/100</span></div><div class="muted">${V.items.filter(i=>i.e==='ok').length} de ${V.items.length} marcadores en rango óptimo</div></div>
+      <p class="muted" style="margin-top:10px">Síndrome metabólico: <b>${V.sm.crit.length} de 5 criterios</b> (${V.sm.evaluados} evaluados)</p>
+      <button class="btn sec sm" onclick="ir('analiticas')">Ver detalle</button>`:`<p class="muted">Aún no hay datos. Añade tu analítica o tus medidas.</p><button class="btn sm" onclick="ir('analiticas')">Calcular ahora</button>`}
+    </div>
+    <div class="card"><h2>Carga de síntomas</h2>
+      ${S?`<div class="row"><div class="big" style="color:${S.total<34?'var(--ok)':S.total<60?'var(--vig)':'var(--alto)'}">${S.total}<span style="font-size:16px">%</span></div><div class="muted">Último registro: ${fmt(ls.fecha)}<br>0% = sin síntomas · 100% = máximo</div></div>
+      ${top3(S)}<button class="btn sec sm" onclick="ir('sintomas')">Ver evolución</button>`:`<p class="muted">Aún no has registrado síntomas.</p><button class="btn pk sm" onclick="ir('sintomas')">Registrar hoy</button>`}
+    </div>
+  </div>
+  <div class="card"><h2>Tus recomendaciones</h2>${R.slice(0,6).map(r=>`<div class="rec"><b>${r.t}</b>${r.d}<div class="why">${r.why}</div></div>`).join('')}</div>
+  <div class="grid g2">
+    <div class="card"><h2>Hoy</h2>${hoyHTML()}</div>
+    <div class="card"><h2>Esta semana</h2>${semanaHTML()}</div>
+  </div>
+  <div class="noprint row"><button class="btn sec" onclick="ir('inicio');setTimeout(()=>window.print(),300)">Imprimir resumen para la consulta</button></div>`;
+},
+
+sintomas(){
+  const reg=byFecha(D.sintomas);const ls=reg[0];
+  return `
+  <div class="card"><h2>Cuéntanos cómo te sientes</h2>
+    <p class="muted">Indica qué molestias sientes en la actualidad y con qué intensidad. Puedes registrarlo a diario o una vez por semana.</p>
+    <div class="grid g3"><div class="field"><label>Fecha</label><input type="date" id="s_fecha" value="${hoy()}" max="${hoy()}"></div></div>
+    <div id="s_form"></div>
+    <h3>Ciclo y sangrado</h3>
+    <select id="s_sangrado">
+      <option value="">Sin sangrado</option><option value="regla">He tenido la regla</option>
+      <option value="abund">Sangrado muy abundante o entre reglas</option><option value="post">Sangrado tras 12 meses o más sin regla</option>
+    </select>
+    <h3>Notas</h3><textarea id="s_nota" placeholder="¿Algo que quieras recordar? Desencadenantes, cambios, cómo has dormido…"></textarea>
+    <div class="row" style="margin-top:12px"><button class="btn pk" onclick="guardarSint()">Guardar registro</button><button class="btn sec" onclick="copiarUltimo()">Partir del último registro</button></div>
+  </div>
+  ${reg.length?`<div class="card"><h2>Evolución de la carga de síntomas</h2>${chart(reg.map(e=>({x:e.fecha,y:scoreSint(e).total})),'#B5657A','%')}</div>
+  <div class="card"><h2>Por categorías (último registro, ${fmt(ls.fecha)})</h2>${barrasCat(scoreSint(ls),reg[1]?scoreSint(reg[1]):null)}</div>
+  <div class="card"><h2>Historial</h2><table><tr><th>Fecha</th><th>Carga</th><th>Notas</th><th></th></tr>${reg.map(e=>`<tr><td>${fmt(e.fecha)}</td><td>${scoreSint(e).total}%</td><td class="muted">${esc(e.nota)}</td><td><button class="btn del" onclick="borrar('sintomas','${e.id}')">Borrar</button></td></tr>`).join('')}</table></div>`:''}`;
+},
+
+analiticas(){
+  const V=valoracionCardio();const reg=byFecha(D.analiticas);
+  const campos=ANAL_CAMPOS.map(k=>`<div class="field"><label>${MARC[k].n}</label><input inputmode="decimal" id="a_${k}" placeholder="${MARC[k].u}"><small>${MARC[k].u} · ref. ${MARC[k].r}</small></div>`).join('');
+  return `
+  <div class="card"><h2>Calcula tu salud cardiometabólica</h2>
+    ${EDIT_A?`<div class="alert info">Estás editando la analítica del ${fmt((D.analiticas.find(a=>a.id===EDIT_A)||{}).fecha)}.</div>`:''}
+    <p class="muted">Cada analítica se guarda por separado con su fecha: añade una nueva cada vez que te hagas análisis y verás cómo evoluciona cada valor. Copia los valores de tu analítica (en las unidades indicadas). Rellena solo los que tengas: la herramienta calcula sola el <b>índice HOMA-IR</b>, el <b>ratio triglicéridos/HDL</b> y el <b>colesterol no-HDL</b>. Para cintura, peso y tensión, ve a <a href="#" onclick="ir('medidas');return false">Peso y medidas</a>.</p>
+    <div class="grid g3"><div class="field"><label>Fecha de la analítica</label><input type="date" id="a_fecha" value="${hoy()}" max="${hoy()}"></div></div>
+    <div class="grid g3" style="margin-top:12px">${campos}</div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="guardarAnal()">${EDIT_A?'Guardar cambios':'Guardar y calcular'}</button>${EDIT_A?'<button class="btn sec" onclick="EDIT_A=null;render()">Cancelar</button>':''}</div>
+  </div>
+  ${V.items.length?`<div class="card"><h2>Tu valoración${V.score!=null?' · '+V.score+'/100':''}</h2>
+    <table><tr><th>Marcador</th><th>Valor</th><th>Referencia</th><th>Estado</th></tr>
+    ${V.items.map(i=>`<tr><td>${i.n}<div class="muted">${fmt(i.fecha)}${MARC[i.k]&&MARC[i.k].calc?' · calculado':''}</div></td><td><b>${fmtN(i.v)}</b> <span class="muted">${i.u}</span></td><td class="muted">${i.r}</td><td>${pill(i.e)}</td></tr>`).join('')}</table>
+    <p class="muted" style="margin-top:10px"><b>Síndrome metabólico</b> (criterios ATP III para mujer): ${V.sm.crit.length} de 5 ${V.sm.crit.length?'— '+V.sm.crit.join(', '):''}. Con 3 o más se considera síndrome metabólico. Evaluados: ${V.sm.evaluados} de 5.</p>
+  </div>`:''}
+  ${reg.length?`<div id="evo">${evolucionAnal(reg)}</div>${tablaAnal(reg)}`:''}`;
+},
+
+medidas(){
+  const reg=byFecha(D.medidas);const alt=D.perfil.altura;
+  const tab=reg.map(m=>{const c=calcMed(m);return`<tr><td>${fmt(m.fecha)}</td><td>${c.peso??'–'}</td><td>${c.cintura??'–'}</td><td>${c.imc?fmtN(c.imc):'–'}</td><td>${c.ica?fmtN(c.ica):'–'}</td><td>${m.tas?m.tas+'/'+m.tad:'–'}</td><td><button class="btn del" onclick="borrar('medidas','${m.id}')">Borrar</button></td></tr>`}).join('');
+  const obj=D.perfil;const lp=ultimo(D.medidas,'peso'),lc=ultimo(D.medidas,'cintura');
+  return `
+  <div class="card"><h2>Peso, medidas y tensión</h2>
+    ${alt?'':'<div class="alert info">Añade tu altura en <a href="#" onclick="ir(\'datos\');return false">Mi perfil</a> para calcular el IMC y el índice cintura/altura.</div>'}
+    <p class="muted">Mide la cintura a la altura del ombligo, en ayunas, al final de una espiración normal. Tensión: sentada, tras 5 minutos de reposo.</p>
+    <div class="grid g3">
+      <div class="field"><label>Fecha</label><input type="date" id="m_fecha" value="${hoy()}" max="${hoy()}"></div>
+      <div class="field"><label>Peso (kg)</label><input inputmode="decimal" id="m_peso"></div>
+      <div class="field"><label>Cintura (cm)</label><input inputmode="decimal" id="m_cintura"></div>
+      <div class="field"><label>Cadera (cm)</label><input inputmode="decimal" id="m_cadera"></div>
+      <div class="field"><label>Tensión sistólica (alta)</label><input inputmode="numeric" id="m_tas" placeholder="mmHg"></div>
+      <div class="field"><label>Tensión diastólica (baja)</label><input inputmode="numeric" id="m_tad" placeholder="mmHg"></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="guardarMed()">Guardar</button></div>
+  </div>
+  ${(obj.pesoObj||obj.cinturaObj)?`<div class="card"><h2>Tus objetivos</h2>
+    ${obj.pesoObj&&lp?`<p>Peso: ${fmtN(lp.v)} kg → objetivo ${fmtN(obj.pesoObj)} kg <span class="muted">(${lp.v>obj.pesoObj?'te faltan '+fmtN(r1(lp.v-obj.pesoObj))+' kg':'¡conseguido!'})</span></p>`:''}
+    ${obj.cinturaObj&&lc?`<p>Cintura: ${fmtN(lc.v)} cm → objetivo ${fmtN(obj.cinturaObj)} cm <span class="muted">(${lc.v>obj.cinturaObj?'te faltan '+fmtN(r1(lc.v-obj.cinturaObj))+' cm':'¡conseguido!'})</span></p>`:''}</div>`:''}
+  ${reg.length?`<div class="grid g2"><div class="card"><h2>Peso</h2>${chart(reg.map(m=>({x:m.fecha,y:m.peso})),'#7A5C7E','kg')}</div><div class="card"><h2>Cintura</h2>${chart(reg.map(m=>({x:m.fecha,y:m.cintura})),'#B5657A','cm')}</div></div>
+  <div class="card"><h2>Historial</h2><div style="overflow-x:auto"><table><tr><th>Fecha</th><th>Peso</th><th>Cintura</th><th>IMC</th><th>Cint./alt.</th><th>Tensión</th><th></th></tr>${tab}</table></div></div>`:''}`;
+},
+
+digestivo(){
+  const reg=byFecha(D.digestivo);const ult=reg.slice(0,14);
+  const ideal=ult.filter(d=>d.bristol>=3&&d.bristol<=5).length;
+  const hz=ult.length?r1(ult.reduce((s,d)=>s+(+d.hinchazon||0),0)/ult.length):null;
+  return `
+  <div class="card"><h2>Tránsito intestinal e hinchazón</h2>
+    <div class="grid g3">
+      <div class="field"><label>Fecha</label><input type="date" id="d_fecha" value="${hoy()}" max="${hoy()}"></div>
+      <div class="field"><label>Deposiciones hoy</label><input inputmode="numeric" id="d_n" value="1"></div>
+      <div class="field"><label>Forma (escala de Bristol)</label><select id="d_bristol"><option value="">— Sin deposición —</option>${BRISTOL.slice(1).map((b,i)=>`<option value="${i+1}" ${i===3?'selected':''}>${b}</option>`).join('')}</select></div>
+    </div>
+    <div class="sym"><b>Hinchazón abdominal</b><div class="scale" id="d_hz">${NIV.map((n,i)=>`<button class="${i===0?'on':''}" onclick="selEsc('d_hz',${i})">${n}</button>`).join('')}</div></div>
+    <div class="sym"><b>Gases</b><div class="scale" id="d_gas">${NIV.map((n,i)=>`<button class="${i===0?'on':''}" onclick="selEsc('d_gas',${i})">${n}</button>`).join('')}</div></div>
+    <div class="row" style="margin:10px 0"><label style="display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" id="d_sangre" style="width:auto"> He visto sangre en las heces</label></div>
+    <div class="field"><label>Notas (alimentos, estrés, ciclo…)</label><textarea id="d_nota"></textarea></div>
+    <div class="row" style="margin-top:12px"><button class="btn" onclick="guardarDig()">Guardar</button></div>
+  </div>
+  ${reg.length?`<div class="card"><h2>Valoración (últimos ${ult.length} registros)</h2>
+    <div class="grid g3"><div><div class="big" style="color:var(--teal)">${Math.round(ideal/ult.length*100)}%</div><span class="muted">de días con heces de forma ideal (Bristol 3–5)</span></div>
+    <div><div class="big" style="color:var(--pink)">${fmtN(hz)}</div><span class="muted">hinchazón media (0 nada · 3 mucho)</span></div></div>
+    ${chart(reg.map(d=>({x:d.fecha,y:+d.hinchazon||0})),'#B5657A')}</div>
+  <div class="card"><h2>Historial</h2><table><tr><th>Fecha</th><th>Bristol</th><th>Hinchazón</th><th>Notas</th><th></th></tr>${reg.map(d=>`<tr><td>${fmt(d.fecha)}</td><td>${d.bristol||'–'}</td><td>${NIV[d.hinchazon||0]}</td><td class="muted">${d.sangre?'<span class="pill alto">Sangre</span> ':''}${esc(d.nota)}</td><td><button class="btn del" onclick="borrar('digestivo','${d.id}')">Borrar</button></td></tr>`).join('')}</table></div>`:''}`;
+},
+
+ejercicio(){
+  const reg=byFecha(D.ejercicio);
+  const semanas=[];const s=dt(semanaActual());for(let i=7;i>=0;i--){const d=new Date(s);d.setDate(d.getDate()-7*i);semanas.push(ymd(d))}
+  const datos=semanas.map(w=>({w,...resumenSemana(w)}));const mx=Math.max(150,...datos.map(d=>d.total));
+  return `
+  <div class="card"><h2>Registra tu actividad</h2>
+    <div class="grid g3">
+      <div class="field"><label>Fecha</label><input type="date" id="e_fecha" value="${hoy()}" max="${hoy()}"></div>
+      <div class="field"><label>Tipo</label><select id="e_tipo">${TIPOS_EJ.map(t=>`<option>${t}</option>`).join('')}</select></div>
+      <div class="field"><label>Minutos</label><input inputmode="numeric" id="e_min" value="30"></div>
+      <div class="field"><label>Intensidad</label><select id="e_int"><option value="suave">Suave (puedo cantar)</option><option value="moderada" selected>Moderada (puedo hablar)</option><option value="intensa">Intensa (me cuesta hablar)</option></select></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="guardarEj()">Guardar</button></div>
+  </div>
+  <div class="card"><h2>Esta semana</h2>${semanaHTML()}</div>
+  <div class="card"><h2>Últimas 8 semanas (minutos totales)</h2>
+    <div class="wk">${datos.map(d=>`<div><span>${d.total||''}</span><i style="height:${Math.round(d.total/mx*90)}px;${d.fuerza>=2?'background:var(--pink)':''}"></i>${fmt(d.w).slice(0,5)}</div>`).join('')}</div>
+    <p class="muted">En rosa, las semanas en las que cumpliste las 2 sesiones de fuerza.</p></div>
+  ${reg.length?`<div class="card"><h2>Historial</h2><table><tr><th>Fecha</th><th>Tipo</th><th>Min</th><th>Intensidad</th><th></th></tr>${reg.slice(0,40).map(e=>`<tr><td>${fmt(e.fecha)}</td><td>${esc(e.tipo)}</td><td>${e.min}</td><td>${e.int}</td><td><button class="btn del" onclick="borrar('ejercicio','${e.id}')">Borrar</button></td></tr>`).join('')}</table></div>`:''}`;
+},
+
+retos(){
+  const rec=retosRecomendados();const act=RETOS.filter(r=>D.retos[r.id]);
+  const disp=RETOS.filter(r=>!D.retos[r.id]).sort((a,b)=>(rec.includes(b.id)?1:0)-(rec.includes(a.id)?1:0));
+  return `
+  <div class="card"><h2>¿Cómo funciona?</h2>
+    <div class="grid g3">
+      <div><b>🏆 Retos</b><p class="muted" style="margin:4px 0">Hábitos guiados que eliges de nuestra lista (14 días; fuerza, 4 semanas). Cada día te damos una idea y marcas si lo has cumplido.</p></div>
+      <div><b>🎯 Objetivos</b><p class="muted" style="margin:4px 0">Metas personales que defines tú: un hábito que repites cada semana o algo que quieres lograr antes de una fecha.</p></div>
+      <div><b>📅 Calendario</b><p class="muted" style="margin:4px 0">Todo lo que marcas se guarda día a día. En el calendario lo ves junto a tus síntomas, ejercicio y demás registros.</p></div>
+    </div>
+    <div class="row"><button class="btn sec sm" onclick="ir('calendario')">Ver mi calendario</button><button class="btn sec sm" onclick="document.getElementById('objetivos').scrollIntoView({behavior:'smooth'})">Ir a mis objetivos</button></div>
+  </div>
+  <div class="card"><h2>🏆 Tus retos</h2>
+    <p class="muted">Elige 1 o 2 a la vez. No hace falta ser perfecta: los retos diarios se superan con ${META_DIARIO} de ${DIAS_RETO} días.</p>
+    ${act.length?act.map(cardRetoActivo).join(''):'<p>Aún no tienes ningún reto en marcha. Empieza por uno de los recomendados para ti.</p>'}
+  </div>
+  ${logrosHTML()}
+  <h2 style="font-size:17px;margin:22px 0 10px">${act.length?'Añade otro reto':'Elige tu primer reto'}</h2>
+  <div class="grid g2">${disp.map(r=>`<div class="card">${rec.includes(r.id)?'<span class="pill tag">Recomendado para ti</span>':''}<h2 style="margin-top:6px">${r.ic} ${r.t}</h2><p class="muted">${r.d}</p><p class="muted"><b>${r.tipo==='semanal'?'4 semanas · 2 sesiones por semana':DIAS_RETO+' días · lo superas con '+META_DIARIO}</b></p><button class="btn pk sm" onclick="iniciarReto('${r.id}')">Empezar reto</button></div>`).join('')}</div>
+  ${objetivosHTML()}`;
+},
+
+calendario(){
+  if(!CAL){const d=new Date();CAL={y:d.getFullYear(),m:d.getMonth(),sel:hoy()}}
+  const E=eventosPorDia();const h=hoy();
+  const pr=new Date(CAL.y,CAL.m,1);const off=(pr.getDay()+6)%7;const nd=new Date(CAL.y,CAL.m+1,0).getDate();
+  let cel=['L','M','X','J','V','S','D'].map(d=>`<div class="dh">${d}</div>`).join('');for(let i=0;i<off;i++)cel+='<div></div>';
+  let act=0,cump=0;
+  for(let d=1;d<=nd;d++){const f=ymd(new Date(CAL.y,CAL.m,d));const ev=E[f]||[];if(ev.length)act++;if(ev.some(e=>e.c==='reto'||(e.c==='obj'&&!e.t.startsWith('⏳'))))cump++;
+    const cats=Object.keys(CATCAL).filter(c=>ev.some(e=>e.c===c));
+    cel+=`<button class="cd ${f===h?'hoy':''} ${f===CAL.sel?'sel':''} ${f>h?'fut':''}" onclick="CAL.sel='${f}';render()" aria-label="${fmt(f)}"><span>${d}</span><div class="cdots">${cats.map(c=>`<i style="background:${CATCAL[c][1]}"></i>`).join('')}</div></button>`}
+  return `<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><button class="btn sec sm" onclick="calMes(-1)" aria-label="Mes anterior">‹</button><h2 style="margin:0">${cap(pr.toLocaleDateString('es-ES',{month:'long',year:'numeric'}))}</h2><button class="btn sec sm" onclick="calMes(1)" aria-label="Mes siguiente">›</button></div>
+   <p class="muted" style="text-align:center;margin:4px 0 12px">${act} días con registros · ${cump} días con retos u objetivos cumplidos</p>
+   <div class="cal">${cel}</div>
+   <div class="ley">${Object.values(CATCAL).map(([n,c])=>`<span><i style="background:${c}"></i>${n}</span>`).join('')}</div>
+   <div class="row" style="justify-content:center;margin-top:10px"><button class="btn sec sm" onclick="calHoy()">Ir a hoy</button></div></div>
+   ${detalleDia(CAL.sel,E)}`;
+},
+
+datos(){
+  const p=D.perfil;
+  return `
+  <div class="card"><h2>Mi perfil</h2>
+    <div class="grid g3">
+      <div class="field"><label>Nombre</label><input id="p_nombre" value="${esc(p.nombre)}"></div>
+      <div class="field"><label>Año de nacimiento</label><input inputmode="numeric" id="p_nac" value="${esc(p.nac)}"></div>
+      <div class="field"><label>Altura (cm)</label><input inputmode="numeric" id="p_altura" value="${esc(p.altura)}"></div>
+      <div class="field"><label>Fecha de tu última regla</label><input type="date" id="p_regla" value="${esc(p.ultimaRegla)}" max="${hoy()}"></div>
+      <div class="field"><label>Tratamiento hormonal (THM)</label><select id="p_thm"><option value="">No</option><option value="si" ${p.thm==='si'?'selected':''}>Sí</option></select></div>
+      <div class="field"><label>Peso objetivo (kg)</label><input inputmode="decimal" id="p_pesoObj" value="${esc(p.pesoObj)}"></div>
+      <div class="field"><label>Cintura objetivo (cm)</label><input inputmode="decimal" id="p_cinturaObj" value="${esc(p.cinturaObj)}"></div>
+    </div>
+    <label style="display:flex;gap:8px;align-items:center;font-weight:400;margin-top:12px"><input type="checkbox" id="p_irr" style="width:auto" ${p.irregular?'checked':''}> Mis ciclos se han vuelto irregulares</label>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="guardarPerfil()">Guardar perfil</button></div>
+  </div>
+  <div class="card"><h2>Mis datos</h2>
+    <p class="muted">Todo se guarda solo en este navegador y este dispositivo: nadie más puede verlo. Si borras el historial, usas el modo incógnito o cambias de móvil, no lo verás. <b>Guarda una copia una vez al mes</b>: con ella puedes recuperar tus datos o pasarlos a otro dispositivo con «Cargar copia».${D.ultimaCopia?'<br>Última copia: '+fmt(D.ultimaCopia)+'.':''}</p>
+    <div class="row"><button class="btn" onclick="exportar()">Descargar copia de seguridad</button>
+    <label class="btn sec" style="margin:0">Cargar copia<input type="file" accept=".json" onchange="importar(this)" style="display:none"></label>
+    <button class="btn del" onclick="borrarTodo()">Borrar todos mis datos</button></div>
+  </div>`;
+}
+};
+
+/* ===================== FRAGMENTOS ===================== */
+function top3(S){
+  const c=CATS.filter(c=>S[c.id]!=null).sort((a,b)=>S[b.id]-S[a.id]).slice(0,3).filter(c=>S[c.id]>0);
+  if(!c.length)return'<p class="muted">Sin síntomas destacados. ¡Bien!</p>';
+  return '<p class="muted" style="margin:10px 0 4px">Lo que más te afecta:</p>'+c.map(x=>`<div class="barrow"><span>${x.nom}</span><div class="bar"><i style="width:${S[x.id]}%;background:var(--pink)"></i></div><b>${S[x.id]}%</b></div>`).join('');
+}
+function barrasCat(S,P){
+  return CATS.filter(c=>S[c.id]!=null).map(c=>{const v=S[c.id];const col=v<34?'var(--ok)':v<60?'var(--vig)':'var(--alto)';
+    let tr='';if(P&&P[c.id]!=null){const d=v-P[c.id];tr=d<0?` <span style="color:var(--ok)">▼${-d}</span>`:d>0?` <span style="color:var(--alto)">▲${d}</span>`:''}
+    return`<div class="barrow"><span>${c.nom}</span><div class="bar"><i style="width:${Math.max(v,2)}%;background:${col}"></i></div><b>${v}%${tr}</b></div>`}).join('')+(P?'<p class="muted">▲▼ Cambio respecto al registro anterior.</p>':'');
+}
+function semanaHTML(){
+  const s=resumenSemana(semanaActual());
+  return `<div class="barrow"><span>Actividad moderada/intensa</span><div class="bar"><i style="width:${Math.min(100,s.min/150*100)}%;background:var(--teal)"></i></div><b>${s.min}′</b></div>
+  <div class="barrow"><span>Días de fuerza</span><div class="bar"><i style="width:${Math.min(100,s.fuerza/2*100)}%;background:var(--pink)"></i></div><b>${s.fuerza}/2</b></div>
+  <p class="muted">Objetivo semanal: 150 minutos de actividad moderada y 2 días de fuerza.</p>`;
+}
+function estadoReto(r){
+  const a=D.retos[r.id];const sem=r.tipo==='semanal';const dur=sem?SEM_DIAS:DIAS_RETO;const meta=sem?META_SEM:META_DIARIO;
+  const h=hoy();const fin=sumaDias(a.inicio,dur-1);
+  const dias=a.dias.filter(f=>f>=a.inicio&&f<=fin);const hechos=dias.length;
+  const terminado=h>fin;const diaN=Math.min(dur,diasEntre(a.inicio,h)+1);
+  const hoyHecho=dias.includes(h);
+  let racha=0;if(!sem){let f=hoyHecho?h:sumaDias(h,-1);while(dias.includes(f)){racha++;f=sumaDias(f,-1)}}
+  const quedan=terminado?0:diasEntre(h,fin)+1;
+  const semIdx=Math.min(3,Math.floor((diaN-1)/7));const iniSem=sumaDias(a.inicio,semIdx*7),finSem=sumaDias(a.inicio,semIdx*7+6);
+  const semana=dias.filter(f=>f>=iniSem&&f<=finSem).length;
+  const superado=hechos>=meta;const faltan=Math.max(0,meta-hechos);
+  const ayer=sumaDias(h,-1);const falloAyer=!sem&&!hoyHecho&&ayer>=a.inicio&&!dias.includes(ayer)&&hechos>0;
+  let msg;
+  if(terminado)msg=superado?'🎉 ¡Reto superado! Has sumado '+hechos+' '+(sem?'sesiones':'días')+'. ¿Lo repites para consolidarlo?':'Has sumado '+hechos+' '+(sem?'sesiones':'días')+'. Cada uno cuenta: ¿lo intentamos de nuevo?';
+  else if(superado)msg='🌸 ¡Reto superado! Lo que sumes a partir de ahora es extra.';
+  else if(!sem&&faltan>quedan)msg='Este reto ya no llega a '+meta+', pero lo importante es el hábito. Sigue sumando días.';
+  else if(falloAyer)msg='Ayer no lo marcaste. No pasa nada: la clave es no fallar dos días seguidos. Hoy es un buen día.';
+  else if(sem)msg=semana>=2?'Semana cumplida 💪. Te faltan '+faltan+' sesiones para superar el reto.':'Esta semana llevas '+semana+' de 2 sesiones. Te faltan '+faltan+' para superar el reto.';
+  else if(hoyHecho)msg=ANIMOS[hechos%ANIMOS.length]+' Te faltan '+faltan+' días para superar el reto.';
+  else msg=hechos?'Llevas '+hechos+' días. Te faltan '+faltan+' para superar el reto.':'Primer paso: márcalo hoy en cuanto lo cumplas.';
+  const tip=r.tips[(Math.max(1,diaN)-1)%r.tips.length];
+  return{sem,dur,meta,fin,dias,hechos,terminado,diaN,hoyHecho,racha,quedan,semana,superado,faltan,msg,tip};
+}
+function cardRetoActivo(r){
+  const e=estadoReto(r);const a=D.retos[r.id];
+  const hitos=(e.sem?HITOS_S:HITOS_D).map(([n,ic,t])=>`<span class="hito ${e.hechos>=n?'on':''}" title="${t}: ${n} ${e.sem?'sesiones':'días'}">${ic}<small>${n}</small></span>`).join('');
+  const dots=Array.from({length:e.dur},(_,i)=>{const f=sumaDias(a.inicio,i);const fut=f>hoy();return`<div class="dot ${e.dias.includes(f)?'done':''} ${fut?'fut':''} ${f===hoy()?'today':''}" title="${fmt(f)}" ${fut?'':`onclick="toggleDia('${r.id}','${f}')"`}>${dt(f).getDate()}</div>`});
+  const cal=e.sem?[0,1,2,3].map(w=>`<div class="row" style="gap:8px;margin:4px 0"><span class="muted" style="width:70px">Semana ${w+1}</span><div class="dots" style="margin:0">${dots.slice(w*7,w*7+7).join('')}</div></div>`).join(''):`<div class="dots">${dots.join('')}</div>`;
+  const accion=e.terminado?`<div class="row"><button class="btn pk" onclick="reiniciarReto('${r.id}')">Repetir reto</button><button class="btn sec" onclick="cerrarReto('${r.id}')">Cerrar</button></div>`
+    :`<button class="btn big-check ${e.hoyHecho?'done':''}" onclick="toggleDia('${r.id}','${hoy()}')">${e.hoyHecho?'✓ ¡Hecho hoy! <small>· toca para deshacer</small>':(e.sem?'Hoy he hecho fuerza':'Hoy lo he hecho')}</button>`;
+  return `<div class="reto">
+    <div class="row" style="justify-content:space-between"><b class="rt">${r.ic} ${r.t}</b><span class="muted">${e.terminado?'Terminado':(e.sem?'Semana '+Math.ceil(e.diaN/7)+' de 4':'Día '+e.diaN+' de '+e.dur)}</span></div>
+    <div class="stats"><div><span class="big2">${e.hechos}<span style="font-size:14px;color:var(--muted)">/${e.meta}</span></span><small>${e.sem?'sesiones':'días cumplidos'}</small></div>
+      ${e.sem?`<div><span class="big2">${e.semana}<span style="font-size:14px;color:var(--muted)">/2</span></span><small>esta semana</small></div>`:`<div><span class="big2">🔥 ${e.racha}</span><small>${e.racha===1?'día seguido':'días seguidos'}</small></div>`}
+      <div class="hitos">${hitos}</div></div>
+    <div class="bar" style="margin:6px 0 10px"><i style="width:${Math.min(100,e.hechos/e.meta*100)}%;background:var(--pink)"></i></div>
+    <p class="msg">${e.msg}</p>
+    ${accion}
+    ${e.terminado?'':`<div class="tip"><b>${e.sem?'Ejercicio para hoy':'Idea para hoy'}:</b> ${e.tip}</div>`}
+    <details><summary class="muted">Ver calendario y marcar días anteriores</summary>${cal}</details>
+    ${e.terminado?'':`<div style="text-align:right"><button class="btn del" onclick="dejarReto('${r.id}')">Abandonar reto</button></div>`}
+  </div>`;
+}
+function logrosHTML(){
+  const L=D.logros||[];if(!L.length)return'';
+  return `<div class="card"><h2>Tus logros</h2><div class="row">${L.map(l=>{const r=RETOS.find(x=>x.id===l.reto);return r?`<div class="logro"><span style="font-size:26px">🏅</span><b>${r.ic} ${r.t}</b><small>${fmt(l.fecha)}</small></div>`:''}).join('')}</div></div>`;
+}
+function retosRecomendados(){
+  const ls=byFecha(D.sintomas)[0];const S=ls?scoreSint(ls):{};
+  const cats=Object.keys(S).filter(k=>k!=='total'&&S[k]>=34);
+  if(valoracionCardio().items.some(i=>i.e!=='ok'))cats.push('cardio');
+  if(!cats.length)return['prot','paseo'];
+  return RETOS.map(r=>({id:r.id,n:r.para.filter(p=>cats.includes(p)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,3).map(x=>x.id);
+}
+
+/* ===================== FORMULARIO SÍNTOMAS ===================== */
+let SEL={};
+AFTER.sintomas=()=>{pintarFormSint()};
+function pintarFormSint(){
+  document.getElementById('s_form').innerHTML=CATS.map(c=>`<h3><span class="pill na">${c.nom}</span></h3>`+c.items.map(([id,t])=>`<div class="sym"><b style="font-weight:500">${t}</b><div class="scale">${NIV.map((n,i)=>`<button class="${SEL[id]===i?'on l'+i:''}" onclick="SEL['${id}']=${i};pintarFormSint()">${n}</button>`).join('')}</div></div>`).join('')).join('');
+}
+function copiarUltimo(){const l=byFecha(D.sintomas)[0];if(!l)return toast('Aún no hay registros anteriores');SEL={...l.v};pintarFormSint();toast('Cargado el último registro: ajusta lo que haya cambiado')}
+function guardarSint(){
+  const marcados=Object.keys(SEL).length;
+  if(!marcados)return toast('Marca al menos un síntoma (aunque sea «Nada»)');
+  const total=CATS.reduce((s,c)=>s+c.items.length,0);
+  for(const c of CATS)for(const[id]of c.items)if(SEL[id]==null)SEL[id]=0;
+  const fecha=document.getElementById('s_fecha').value||hoy();
+  D.sintomas=D.sintomas.filter(e=>e.fecha!==fecha);
+  D.sintomas.push({id:uid(),fecha,v:{...SEL},sangrado:document.getElementById('s_sangrado').value,nota:document.getElementById('s_nota').value.trim()});
+  guardar();SEL={};toast(marcados<total?'Guardado (los no marcados cuentan como «Nada»)':'Registro guardado');render();
+}
+
+/* ===================== GUARDADOS ===================== */
+function val(id){return num(document.getElementById(id).value)}
+let MSEL=null,EDIT_A=null;
+AFTER.analiticas=()=>{if(!EDIT_A)return;const a=D.analiticas.find(x=>x.id===EDIT_A);if(!a){EDIT_A=null;return}document.getElementById('a_fecha').value=a.fecha;for(const k of ANAL_CAMPOS)document.getElementById('a_'+k).value=a[k]!=null?fmtN(a[k]):''};
+function editarAnal(id){EDIT_A=id;render();window.scrollTo({top:0,behavior:'smooth'})}
+function verMarcador(k){MSEL=k;render();const e=document.getElementById('evo');if(e&&e.scrollIntoView)e.scrollIntoView({behavior:'smooth'})}
+function evolucionAnal(reg){
+  const calc=reg.map(a=>({fecha:a.fecha,c:calcAnal(a)}));
+  const disp=Object.keys(MARC).filter(k=>calc.some(x=>x.c[k]!=null));if(!disp.length)return'';
+  if(!disp.includes(MSEL))MSEL=disp.includes('homa')?'homa':disp[0];
+  const m=MARC[MSEL];const pts=calc.filter(x=>x.c[MSEL]!=null).map(x=>({x:x.fecha,y:x.c[MSEL]})).sort((a,b)=>a.x<b.x?-1:1);
+  let res;
+  if(pts.length>=2){const a=pts[0],b=pts[pts.length-1];const d=r2(b.y-a.y);const ea=m.f(a.y),eb=m.f(b.y);const rk={alto:0,vig:1,ok:2};
+    const t=rk[eb]>rk[ea]?'<span style="color:var(--ok)">ha mejorado</span>':rk[eb]<rk[ea]?'<span style="color:var(--alto)">ha empeorado</span>':eb==='ok'?'<span style="color:var(--ok)">se mantiene en rango óptimo</span>':'se mantiene en el mismo rango';
+    res=`<p>Del ${fmt(a.x)} al ${fmt(b.x)}: <b>${fmtN(a.y)} → ${fmtN(b.y)}</b> ${m.u} (${d>0?'+':''}${fmtN(d)}) · ${t}.</p>`}
+  else res='<p class="muted">De momento hay un solo valor. Cuando guardes otra analítica verás aquí la gráfica de evolución.</p>';
+  return`<div class="card"><h2>📈 Evolución por marcador</h2>
+   <div class="field" style="max-width:360px"><label>Elige un marcador</label><select onchange="MSEL=this.value;render()">${disp.map(k=>`<option value="${k}" ${k===MSEL?'selected':''}>${MARC[k].n}</option>`).join('')}</select></div>
+   <p class="muted" style="margin:8px 0 0">Referencia: ${m.r}${m.u?' '+m.u:''} · ${pts.length} ${pts.length===1?'valor guardado':'valores guardados'}</p>
+   ${res}${chart(pts,'#7A5C7E',m.u,y=>colorE(m.f(y)))}
+   <p class="muted">Cada punto lleva el color de su estado: verde óptimo, ámbar vigilar, rojo fuera de rango.</p></div>`;
+}
+function tablaAnal(reg){
+  const calc=reg.map(a=>({a,c:calcAnal(a)}));const ks=Object.keys(MARC).filter(k=>calc.some(x=>x.c[k]!=null));
+  return`<div class="card"><h2>🧪 Todas tus analíticas</h2><p class="muted">Cada columna es una analítica, la más reciente a la izquierda. Toca el nombre de un marcador para ver su gráfica.</p>
+  <div style="overflow-x:auto"><table class="tcomp"><tr><th>Marcador</th>${calc.map(x=>`<th>${fmt(x.a.fecha)}</th>`).join('')}</tr>
+  ${ks.map(k=>`<tr><td><a href="#" onclick="verMarcador('${k}');return false">${MARC[k].n.split(' (')[0]}</a>${MARC[k].calc?' <span class="muted">· calc.</span>':''}</td>${calc.map(x=>{const v=x.c[k];return v==null?'<td class="muted">–</td>':`<td><span class="vv ${MARC[k].f(v)}">${fmtN(v)}</span></td>`}).join('')}</tr>`).join('')}
+  <tr><td></td>${calc.map(x=>`<td><button class="btn del" style="color:var(--teal)" onclick="editarAnal('${x.a.id}')">Editar</button><br><button class="btn del" onclick="borrar('analiticas','${x.a.id}')">Borrar</button></td>`).join('')}</tr>
+  </table></div></div>`;
+}
+function guardarAnal(){
+  const a={id:EDIT_A||uid(),fecha:document.getElementById('a_fecha').value||hoy()};let n=0;
+  for(const k of ANAL_CAMPOS){const v=val('a_'+k);if(v!=null){a[k]=v;n++}}
+  if(!n)return toast('Introduce al menos un valor');
+  if(EDIT_A){D.analiticas=D.analiticas.map(x=>x.id===EDIT_A?a:x);EDIT_A=null;toast('Analítica actualizada')}else{D.analiticas.push(a);toast('Analítica guardada. Mira su evolución más abajo.')}guardar();render();
+}
+function guardarMed(){
+  const m={id:uid(),fecha:document.getElementById('m_fecha').value||hoy()};
+  for(const k of ['peso','cintura','cadera','tas','tad']){const v=val('m_'+k);if(v!=null)m[k]=v}
+  if(Object.keys(m).length<=2)return toast('Introduce al menos un valor');
+  if((m.tas!=null)!==(m.tad!=null))return toast('Introduce las dos cifras de la tensión');
+  D.medidas.push(m);guardar();toast('Medidas guardadas');render();
+}
+const ESC={};
+function selEsc(id,i){ESC[id]=i;document.querySelectorAll('#'+id+' button').forEach((b,j)=>b.className=j===i?'on l'+i:'')}
+function guardarDig(){
+  D.digestivo.push({id:uid(),fecha:document.getElementById('d_fecha').value||hoy(),n:val('d_n'),bristol:val('d_bristol'),hinchazon:ESC.d_hz||0,gases:ESC.d_gas||0,sangre:document.getElementById('d_sangre').checked,nota:document.getElementById('d_nota').value.trim()});
+  ESC.d_hz=0;ESC.d_gas=0;guardar();toast('Registro guardado');render();
+}
+function guardarEj(){
+  const min=val('e_min');if(!min)return toast('Indica los minutos');
+  D.ejercicio.push({id:uid(),fecha:document.getElementById('e_fecha').value||hoy(),tipo:document.getElementById('e_tipo').value,min,int:document.getElementById('e_int').value});
+  guardar();toast('Actividad guardada');render();
+}
+function guardarPerfil(){
+  const g=id=>document.getElementById(id).value.trim();
+  D.perfil={nombre:g('p_nombre'),nac:g('p_nac'),altura:g('p_altura'),ultimaRegla:g('p_regla'),thm:g('p_thm'),pesoObj:num(g('p_pesoObj')),cinturaObj:num(g('p_cinturaObj')),irregular:document.getElementById('p_irr').checked};
+  guardar();toast('Perfil guardado');
+}
+function borrar(col,id){if(!confirm('¿Borrar este registro?'))return;D[col]=D[col].filter(e=>e.id!==id);guardar();render()}
+
+/* ===================== RETOS Y OBJETIVOS ===================== */
+function retosEnCurso(){return RETOS.filter(r=>D.retos[r.id]&&!estadoReto(r).terminado).length}
+function iniciarReto(id){
+  if(retosEnCurso()>=2&&!confirm('Ya tienes 2 retos en marcha. Funciona mejor ir de uno en uno o de dos en dos. ¿Empezar igualmente?'))return;
+  D.retos[id]={inicio:hoy(),dias:[]};guardar();render();
+  const r=RETOS.find(x=>x.id===id);
+  celebrar(r.ic,'¡Empezamos!','Tu reto «'+r.t+'» empieza hoy. Márcalo cada día en cuanto lo cumplas. '+(r.tipo==='semanal'?'Objetivo: 2 sesiones por semana durante 4 semanas.':'Lo superas con '+META_DIARIO+' de '+DIAS_RETO+' días.'));
+}
+function reiniciarReto(id){D.retos[id]={inicio:hoy(),dias:[]};guardar();render();toast('Reto reiniciado. ¡A por ello!')}
+function cerrarReto(id){delete D.retos[id];guardar();render()}
+function dejarReto(id){if(!confirm('¿Abandonar este reto? Se perderá el progreso.'))return;delete D.retos[id];guardar();render()}
+function mensajeHito(n,r){
+  const sem=r.tipo==='semanal';
+  if(sem)return n===2?'Primera semana de fuerza cumplida. Tus músculos ya han recibido el mensaje.':'Vas por la mitad. Lo más difícil, empezar, ya está hecho.';
+  return {3:'Los primeros días son los que más cuestan, y ya los has pasado.',7:'Una semana entera. Aquí es donde el cuerpo empieza a notarlo.',14:'Catorce de catorce. Esto ya es un hábito tuyo.'}[n]||'¡Sigue así!';
+}
+function toggleDia(id,f){
+  const a=D.retos[id];const r=RETOS.find(x=>x.id===id);const antes=estadoReto(r).hechos;
+  const quita=a.dias.includes(f);a.dias=quita?a.dias.filter(x=>x!==f):[...a.dias,f];
+  const e=estadoReto(r);guardar();render();
+  if(quita)return;
+  if(e.superado&&!a.logrado){a.logrado=true;D.logros=D.logros||[];D.logros.push({reto:id,fecha:hoy()});guardar();render();
+    return celebrar('🌸','¡Reto superado!','Has completado «'+r.t+'». Ya tienes una nueva medalla en tus logros. Lo que sumes a partir de ahora es extra.')}
+  const h=(e.sem?HITOS_S:HITOS_D).find(([n])=>antes<n&&e.hechos>=n);
+  if(h)return celebrar(h[1],h[2],mensajeHito(h[0],r));
+  toast(ANIMOS[e.hechos%ANIMOS.length]);
+}
+function celebrar(ic,t,txt){
+  const ov=document.createElement('div');ov.className='ov';
+  ov.innerHTML=`<div><div class="e">${ic}</div><h2>${t}</h2><p>${txt}</p><button class="btn pk">¡Seguimos!</button></div>`;
+  ov.onclick=ev=>{if(ev.target===ov||ev.target.tagName==='BUTTON')ov.remove()};document.body.appendChild(ov);
+}
+const IDEAS_OBJ=[['Dormir 7 horas','habito',5],['Caminar 8.000 pasos','habito',5],['Comer pescado azul','habito',3],['Respirar o meditar 5 minutos','habito',7],['Hacerme la analítica anual','meta'],['Pedir cita con mi ginecóloga','meta'],['Hacerme una densitometría','meta']];
+function lunes(f){const d=dt(f);return sumaDias(f,-((d.getDay()+6)%7))}
+function contarSemana(o,f){const ini=lunes(f),fin=sumaDias(ini,6);return (o.dias||[]).filter(x=>x>=ini&&x<=fin).length}
+function semanasCumplidas(o){const w={};(o.dias||[]).forEach(f=>{const l=lunes(f);w[l]=(w[l]||0)+1});return Object.values(w).filter(n=>n>=o.veces).length}
+function tipoObj(v){document.getElementById('o_hab').style.display=v==='habito'?'':'none';document.getElementById('o_meta').style.display=v==='meta'?'':'none'}
+function ideaObj(i){const x=IDEAS_OBJ[i];document.getElementById('o_txt').value=x[0];document.getElementById('o_tipo').value=x[1];tipoObj(x[1]);if(x[2])document.getElementById('o_veces').value=String(x[2])}
+function addObj(){
+  const t=document.getElementById('o_txt').value.trim();if(!t)return toast('Escribe tu objetivo');
+  const tipo=document.getElementById('o_tipo').value;const o={id:uid(),t,tipo,creado:hoy(),dias:[]};
+  if(tipo==='habito')o.veces=+document.getElementById('o_veces').value||5;else o.limite=document.getElementById('o_lim').value||'';
+  D.objetivos.push(o);guardar();render();toast('Objetivo añadido. También lo verás en tu calendario.');
+}
+function toggleHab(id,f){
+  const o=D.objetivos.find(x=>x.id===id);o.dias=o.dias||[];const on=o.dias.includes(f);
+  o.dias=on?o.dias.filter(x=>x!==f):[...o.dias,f];guardar();render();if(on)return;
+  if(contarSemana(o,f)===o.veces)celebrar('🎯','¡Semana cumplida!','Has cumplido «'+esc(o.t)+'» '+o.veces+' '+(o.veces===1?'día':'días')+' esta semana.');else toast('¡Anotado en tu calendario!');
+}
+function togObj(id){const o=D.objetivos.find(x=>x.id===id);o.hecho=!o.hecho;o.fechaHecho=o.hecho?hoy():null;guardar();render();if(o.hecho)celebrar('✅','¡Objetivo conseguido!','«'+esc(o.t)+'». ¿Cuál es el siguiente?')}
+function delObj(id){if(!confirm('¿Borrar este objetivo y su historial?'))return;D.objetivos=D.objetivos.filter(x=>x.id!==id);guardar();render()}
+function progMedida(nom,k,obj,u){
+  const ult=ultimo(D.medidas,k);
+  if(!ult)return`<div class="obj"><b>${nom}: objetivo ${fmtN(obj)} ${u}</b><p class="muted" style="margin:4px 0 0">Registra tu ${k} en <a href="#" onclick="ir('medidas');return false">Peso y medidas</a> para ver tu progreso.</p></div>`;
+  const prim=[...D.medidas].sort((a,b)=>a.fecha<b.fecha?-1:1).find(m=>m[k]!=null)[k];
+  const sube=obj>prim;const ok=sube?ult.v>=obj:ult.v<=obj;const av=sube?ult.v-prim:prim-ult.v;const tot=Math.abs(obj-prim);
+  const pct=ok?100:tot?Math.max(0,Math.min(100,av/tot*100)):0;
+  return`<div class="obj"><div class="row" style="justify-content:space-between"><b>${nom}</b><span class="muted">${fmtN(ult.v)} → ${fmtN(obj)} ${u}</span></div><div class="bar" style="margin:6px 0"><i style="width:${pct}%;background:var(--teal)"></i></div><span class="muted">${ok?'🎉 ¡Objetivo conseguido!':'Te faltan '+fmtN(r1(Math.abs(obj-ult.v)))+' '+u+(av>0?' · ya has '+(sube?'subido':'bajado')+' '+fmtN(r1(av))+' '+u:'')}</span></div>`;
+}
+function objetivosHTML(){
+  const p=D.perfil;const h=hoy();const ini=lunes(h);const L=['L','M','X','J','V','S','D'];
+  const auto=(p.pesoObj?progMedida('⚖️ Peso','peso',p.pesoObj,'kg'):'')+(p.cinturaObj?progMedida('📏 Cintura','cintura',p.cinturaObj,'cm'):'');
+  const habs=D.objetivos.filter(o=>o.tipo==='habito'),metas=D.objetivos.filter(o=>o.tipo!=='habito');
+  const habHTML=habs.map(o=>{const n=contarSemana(o,h);const on=(o.dias||[]).includes(h);const sc=semanasCumplidas(o);
+    return`<div class="obj"><div class="row" style="justify-content:space-between"><b>🔁 ${esc(o.t)}</b><span class="muted">${n}/${o.veces} días esta semana ${n>=o.veces?'✅':''}</span></div>
+    <div class="dots" style="margin:8px 0">${L.map((l,i)=>{const f=sumaDias(ini,i);const fut=f>h;return`<div class="dot ${(o.dias||[]).includes(f)?'done':''} ${fut?'fut':''} ${f===h?'today':''}" title="${fmt(f)}" ${fut?'':`onclick="toggleHab('${o.id}','${f}')"`}>${l}</div>`}).join('')}</div>
+    <div class="bar"><i style="width:${Math.min(100,n/o.veces*100)}%;background:var(--teal)"></i></div>
+    <div class="row" style="justify-content:space-between;margin-top:8px"><button class="btn sm ${on?'hecho':''}" onclick="toggleHab('${o.id}','${h}')">${on?'✓ Hecho hoy':'Hoy lo he hecho'}</button><span class="muted">${sc} ${sc===1?'semana cumplida':'semanas cumplidas'} <button class="btn del" onclick="delObj('${o.id}')">Borrar</button></span></div></div>`}).join('');
+  const metaHTML=metas.map(o=>{const q=o.limite?diasEntre(h,o.limite):null;
+    return`<div class="obj"><div class="row" style="gap:10px"><input type="checkbox" style="width:auto" ${o.hecho?'checked':''} onchange="togObj('${o.id}')"><b style="flex:1;${o.hecho?'text-decoration:line-through;color:var(--muted)':''}">🎯 ${esc(o.t)}</b><button class="btn del" onclick="delObj('${o.id}')">Borrar</button></div>
+    <span class="muted">${o.hecho?'✅ Conseguido'+(o.fechaHecho?' el '+fmt(o.fechaHecho):''):o.limite?(q<0?'⚠️ La fecha límite era el '+fmt(o.limite):q===0?'⏳ ¡Hoy es la fecha límite!':'⏳ Quedan '+q+' días (hasta el '+fmt(o.limite)+')'):'Sin fecha límite · márcalo cuando lo consigas'}</span></div>`}).join('');
+  return`<div class="card" id="objetivos"><h2>🎯 Mis objetivos</h2>
+   <p class="muted">Los defines tú. Pueden ser un <b>hábito semanal</b> (eliges cuántos días por semana y marcas los días que lo cumples) o una <b>meta con fecha</b> (la marcas cuando la consigues).</p>
+   ${auto?`<h3>Peso y cintura</h3>${auto}`:`<p class="muted">También puedes fijar un objetivo de peso o de cintura en <a href="#" onclick="ir('datos');return false">Mi perfil</a>.</p>`}
+   ${habs.length?`<h3>Hábitos semanales</h3>${habHTML}`:''}
+   ${metas.length?`<h3>Metas</h3>${metaHTML}`:''}
+   <h3>Añadir un objetivo</h3>
+   <div class="grid g3">
+     <div class="field" style="grid-column:1/-1"><label>¿Qué quieres conseguir?</label><input id="o_txt" placeholder="Ej.: Dormir 7 horas"></div>
+     <div class="field"><label>Tipo</label><select id="o_tipo" onchange="tipoObj(this.value)"><option value="habito">Hábito semanal</option><option value="meta">Meta con fecha</option></select></div>
+     <div class="field" id="o_hab"><label>¿Cuántos días por semana?</label><select id="o_veces">${[1,2,3,4,5,6,7].map(n=>`<option ${n===5?'selected':''}>${n}</option>`).join('')}</select></div>
+     <div class="field" id="o_meta" style="display:none"><label>Fecha límite (opcional)</label><input type="date" id="o_lim" min="${h}"></div>
+   </div>
+   <p class="muted" style="margin:12px 0 6px">Ideas para empezar (tócalas para rellenar):</p>
+   <div class="row" style="gap:6px">${IDEAS_OBJ.map((x,i)=>`<button class="chip" onclick="ideaObj(${i})">${x[0]}</button>`).join('')}</div>
+   <div class="row" style="margin-top:14px"><button class="btn" onclick="addObj()">Añadir objetivo</button></div>
+  </div>`;
+}
+function hoyHTML(){
+  const h=hoy();const act=RETOS.filter(r=>D.retos[r.id]);const hb=D.objetivos.filter(o=>o.tipo==='habito');
+  if(!act.length&&!hb.length)return`<p class="muted">No tienes retos ni objetivos activos. Empieza por uno de los retos recomendados para ti.</p><button class="btn pk sm" onclick="ir('retos')">Elegir un reto</button>`;
+  return act.map(r=>{const e=estadoReto(r);return`<div class="mini"><div><b>${r.ic} ${r.t}</b><div class="muted">${r.tipo==='semanal'?e.hechos+' de '+e.meta+' sesiones · '+e.semana+' esta semana':'🔥 Racha de '+e.racha+' · '+e.hechos+' de '+e.meta+' días'}</div></div>${e.terminado?`<button class="btn sec sm" onclick="ir('retos')">Ver resultado</button>`:`<button class="btn sm ${e.hoyHecho?'hecho':''}" onclick="toggleDia('${r.id}','${h}')">${e.hoyHecho?'✓ Hecho':'Hoy lo he hecho'}</button>`}</div>`}).join('')
+   +hb.map(o=>{const on=(o.dias||[]).includes(h);return`<div class="mini"><div><b>🔁 ${esc(o.t)}</b><div class="muted">${contarSemana(o,h)} de ${o.veces} días esta semana</div></div><button class="btn sm ${on?'hecho':''}" onclick="toggleHab('${o.id}','${h}')">${on?'✓ Hecho':'Hoy lo he hecho'}</button></div>`}).join('')
+   +`<div class="row" style="margin-top:10px"><button class="btn sec sm" onclick="ir('retos')">Retos y objetivos</button><button class="btn sec sm" onclick="ir('calendario')">Ver calendario</button></div>`;
+}
+
+/* ===================== CALENDARIO ===================== */
+let CAL=null;
+const CATCAL={reto:['Retos','#B5657A'],obj:['Objetivos','#7A5C7E'],sint:['Síntomas','#D9A7BE'],ej:['Ejercicio','#6B8F71'],dig:['Digestivo','#C9A35F'],med:['Medidas y analíticas','#5C6B8A']};
+const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+function eventosPorDia(){
+  const E={};const add=(f,c,t)=>{if(f)(E[f]=E[f]||[]).push({c,t})};
+  for(const r of RETOS){const a=D.retos[r.id];if(a)a.dias.forEach(f=>add(f,'reto',r.ic+' Reto cumplido: '+r.t))}
+  (D.logros||[]).forEach(l=>{const r=RETOS.find(x=>x.id===l.reto);if(r)add(l.fecha,'reto','🏅 Reto superado: '+r.t)});
+  D.objetivos.forEach(o=>{(o.dias||[]).forEach(f=>add(f,'obj','🔁 '+esc(o.t)));if(o.hecho&&o.fechaHecho)add(o.fechaHecho,'obj','✅ Objetivo conseguido: '+esc(o.t));else if(!o.hecho&&o.limite)add(o.limite,'obj','⏳ Fecha límite: '+esc(o.t))});
+  D.sintomas.forEach(e=>add(e.fecha,'sint','📝 Síntomas registrados · carga '+scoreSint(e).total+'%'));
+  D.ejercicio.forEach(e=>add(e.fecha,'ej','🏃‍♀️ '+esc(e.tipo)+' · '+e.min+' min'));
+  D.digestivo.forEach(d=>add(d.fecha,'dig','🌿 Digestivo'+(d.bristol?' · Bristol '+d.bristol:'')+' · hinchazón: '+NIV[d.hinchazon||0].toLowerCase()));
+  D.medidas.forEach(m=>add(m.fecha,'med','⚖️ Medidas'+(m.peso!=null?' · '+fmtN(m.peso)+' kg':'')+(m.cintura!=null?' · cintura '+fmtN(m.cintura)+' cm':'')+(m.tas!=null?' · tensión '+m.tas+'/'+m.tad:'')));
+  D.analiticas.forEach(a=>add(a.fecha,'med','🧪 Analítica guardada'));
+  return E;
+}
+function calMes(n){CAL.m+=n;if(CAL.m<0){CAL.m=11;CAL.y--}if(CAL.m>11){CAL.m=0;CAL.y++}render()}
+function calHoy(){CAL=null;render()}
+function detalleDia(f,E){
+  const h=hoy();const ev=E[f]||[];
+  const tit=cap(dt(f).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'}));
+  let acc='';
+  if(f<=h){
+    const rs=RETOS.filter(r=>{const a=D.retos[r.id];return a&&f>=a.inicio&&f<=estadoReto(r).fin});
+    const hb=D.objetivos.filter(o=>o.tipo==='habito'&&f>=(o.creado||''));
+    if(rs.length||hb.length)acc=`<h3>Marca lo que cumpliste ${f===h?'hoy':'este día'}</h3><div class="row" style="gap:6px">${rs.map(r=>{const on=D.retos[r.id].dias.includes(f);return`<button class="chip ${on?'on':''}" onclick="toggleDia('${r.id}','${f}')">${on?'✓ ':''}${r.ic} ${r.t}</button>`}).join('')}${hb.map(o=>{const on=(o.dias||[]).includes(f);return`<button class="chip ${on?'on':''}" onclick="toggleHab('${o.id}','${f}')">${on?'✓ ':''}🔁 ${esc(o.t)}</button>`}).join('')}</div>`;
+  }
+  const lista=ev.length?ev.map(e=>`<div class="ev"><i class="evd" style="background:${CATCAL[e.c][1]}"></i>${e.t}</div>`).join(''):`<p class="muted">${f>h?'Este día aún no ha llegado.':'No hay nada registrado este día.'}</p>`;
+  return`<div class="card"><h2>${tit}</h2>${lista}${acc}</div>`;
+}
+
+/* ===================== EXPORTAR / IMPORTAR ===================== */
+let DL=null;
+try{if(window.claude&&typeof window.claude.use==='function')window.claude.use('downloads').then(d=>{DL=d}).catch(()=>{})}catch(e){}
+async function exportar(){
+  const nombre='mi-salud-40_'+hoy()+'.json';const txt=JSON.stringify(D,null,2);
+  const marca=()=>{D.ultimaCopia=hoy();guardar();if(TAB==='inicio'||TAB==='datos')render()};
+  if(DL){
+    try{await DL.save({filename:nombre,data:txt});marca();toast('Copia de seguridad guardada')}
+    catch(e){const c=e&&e.code;toast(c==='declined'?'Descarga cancelada':c==='rate_limited'?'Espera un momento y vuelve a intentarlo':'No se ha podido descargar en este navegador')}
+    return;
+  }
+  if(window.claude&&window.claude.use)return toast('La descarga aún no está lista. Inténtalo de nuevo en unos segundos.');
+  const b=new Blob([txt],{type:'application/json'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=nombre;document.body.appendChild(a);a.click();a.remove();marca();
+}
+function importar(inp){
+  const f=inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=='object'||!Array.isArray(d.sintomas))throw 0;if(!confirm('Esto sustituirá los datos actuales por los de la copia. ¿Continuar?'))return;D=Object.assign(vacio(),d);guardar();toast('Copia cargada');ir('inicio')}catch(e){toast('El archivo no es una copia válida')}};
+  r.readAsText(f);
+}
+function borrarTodo(){if(!confirm('¿Seguro? Se borrarán todos tus registros de este navegador. Descarga antes una copia si la quieres conservar.'))return;D=vacio();guardar();toast('Datos borrados');ir('inicio')}
+
+/* ===================== INICIO ===================== */
+cargar();nav();render();
+</script>
+</body>
+</html>
